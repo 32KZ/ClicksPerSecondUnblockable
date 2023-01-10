@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <title>CPS Test</title>
+  </head>
+  <body>
+    <h2>CPS Test</h2>
+    <p>Click as fast as you can for 5 seconds.</p>
+	<button id="Start" onclick="StartTimer()" >Start! </button>
+    <button onclick="registerClick()">Click Here!</button>
+    <p id="clicks"></p>
+	<p id="cps"></p>
+	<p id="sectimer"></p>
+    <script>
+      var totalClicks = 0;
+    
+
+      function registerClick() {
+        totalClicks++;
+      }
+	  function StartTimer() {
+	  document.getElementById("sectimer").style.display = "block"; //show <p id>
+	  document.getElementById("clicks").style.display = "none";  // hide <p id>
+	  document.getElementById("cps").style.display = "none";  // show <p id>
+	  var timer = 5;
+		document.getElementById("sectimer").innerHTML = "Seconds remaining:" + timer;
+		var interval = setInterval(() => {
+		console.log(timer);
+		timer--;
+		document.getElementById("sectimer").innerHTML = "Seconds remaining:" + timer;
+		
+
+		if (timer === 0) 
+		{
+		document.getElementById("sectimer").style.display = "none";  // hide <p id>
+		clearInterval(interval);
+		
+		}
+		
+		}, 1000);
+		
+		document.getElementById("Start").disabled = true;
+	    var startTime = new Date().getTime();
+        var clickInterval = window.setInterval(function(){
+        var elapsedTime = new Date().getTime() - startTime;
+        if(elapsedTime > 5000) {
+          window.clearInterval(clickInterval);
+		  var ClicksPerSecond = totalClicks / 5;
+		  document.getElementById("clicks").style.display = "block";  // show <p id>
+		  document.getElementById("cps").style.display = "block";  // show <p id>
+          document.getElementById("clicks").innerHTML = "You clicked " + totalClicks + " times in 5 seconds!";
+		  document.getElementById("cps").innerHTML = "That's " + ClicksPerSecond + " Clicks per second!";
+		  totalClicks = 0;
+		  document.getElementById("Start").disabled = false;
+		  
+        }
+      }, 10);
+	  }
+    </script>
+  </body>
+</html>
